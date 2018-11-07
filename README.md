@@ -1,12 +1,46 @@
-SELECT 
-   t.pushId  AS  session_id,
-   imei,
-   t.optType,
-   non_stru_field      
-FROM bicoredata.dwd_evt_bisdk_customize_dm 
-LATERAL VIEW JSON_TUPLE(regexp_replace(non_stru_field,'\\^',','),'optType','pushId')t  AS optType,pushId
-WHERE pt_d='20171021' 
-   AND pt_service='music' 
-   AND oper_id='K098'
-   AND t.optType='1'
-   LIMIT 50
+public static final String test1=  "select\r\n" + 
+            " a.cc_name as cc_name,\r\n" + 
+            " b.cc_class \r\n" + 
+            " from call_center aaa join \r\n" + 
+            " center bbb on aaa.cc_rec_start_date=bbb.cc_rec_start_date";
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+   public void columnLineage(String sql) throws ParseException, QuantityException {
+        this.initActionRoutes(sql);
+        if (null != this.actionRoutes && this.actionRoutes.size() > 0) {
+            this.analysisActionRoutes();
+            
+             List<ColumnLineage> columnLineagescc = this.actionRoutes.get(0).getColumnLineages();
+             System.out.println(columnLineagescc.size());
+             for (ColumnLineage columnLineage : columnLineagescc)
+            {       
+                 String tableAlias = columnLineage.getAlias().getName();
+                 String tableName = columnLineage.getTableName().getName();
+                 String colName = columnLineage.getColumn().getColName().getName();
+                 if(tableAlias !=null)
+                 {
+                     System.out.println(tableAlias +"--->" + tableName + "--->" + colName);
+                 }
+                 else
+                 {
+                     System.out.println( tableName + "--->" + colName);
+                 }
+               
+            }
+           
+        }
+        
+    }          
+            
+            
+            
+            
+        
